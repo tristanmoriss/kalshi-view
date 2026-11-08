@@ -1,6 +1,6 @@
 {
  "mode": "live",
- "risk_level": "NORMAL",
+ "risk_level": "SAFE",
  "levels": {
   "SAFE": {
    "max_capital_per_market": 50,
