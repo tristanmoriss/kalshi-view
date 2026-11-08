@@ -1,0 +1,43 @@
+{
+ "mode": "live",
+ "risk_level": "SAFE",
+ "levels": {
+  "SAFE": {
+   "max_capital_per_market": 50,
+   "max_open": 2,
+   "daily_loss_stop": 50,
+   "parlays": false,
+   "max_legs": 0,
+   "max_units": 3
+  },
+  "NORMAL": {
+   "max_capital_per_market": 150,
+   "max_open": 4,
+   "daily_loss_stop": 150,
+   "parlays": true,
+   "max_legs": 3,
+   "max_units": 6
+  },
+  "AGGRESSIVE": {
+   "max_capital_per_market": 400,
+   "max_open": 8,
+   "daily_loss_stop": 400,
+   "parlays": true,
+   "max_legs": 5,
+   "max_units": 10
+  },
+  "DEGEN": {
+   "max_capital_per_market": 1000,
+   "max_open": 15,
+   "daily_loss_stop": 750,
+   "parlays": true,
+   "max_legs": 8,
+   "max_units": 20
+  }
+ },
+ "bankroll": 49.02,
+ "updated": "2026-11-05",
+ "unit_pct": 1.0,
+ "practice": true,
+ "practice_gate_c": 0.15
+}
