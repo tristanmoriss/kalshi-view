@@ -1,6 +1,6 @@
 {
  "mode": "live",
- "risk_level": "SAFE",
+ "risk_level": "NORMAL",
  "levels": {
   "SAFE": {
    "max_capital_per_market": 50,
@@ -37,7 +37,7 @@
  },
  "bankroll": 49.02,
  "updated": "2026-11-05",
- "unit_pct": 1.0,
+ "unit_pct": 1,
  "practice": true,
  "practice_gate_c": 0.15
 }
