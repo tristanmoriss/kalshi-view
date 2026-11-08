@@ -37,7 +37,7 @@
  },
  "bankroll": 49.02,
  "updated": "2026-11-05",
- "unit_pct": 1,
+ "unit_pct": 1.0,
  "practice": true,
  "practice_gate_c": 0.15
 }
