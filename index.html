@@ -1,110 +1,103 @@
-<!doctype html><html><head><meta charset=utf-8>
+<!doctype html><html lang=en><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="apple-touch-icon" href="apple-touch-icon.png"><title>Kalshi Dashboard — LIVE</title><style>
-:root{--bg:#0f1115;--bg2:#16181d;--line:#262b34;--muted:#8a91a0;--gold:#d4af37}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#e8e9ec;font-family:-apple-system,sans-serif;padding:0 0 30px}
-#top{position:sticky;top:0;background:rgba(15,17,21,.95);backdrop-filter:blur(10px);padding:12px 14px;border-bottom:1px solid var(--line)}
-h1{font-size:18px;margin:0}.sub{font-size:11px;color:var(--muted);margin-top:2px}
+<meta name=theme-color content="#0f1115">
+<meta http-equiv="Cache-Control" content="no-store">
+<meta http-equiv="Pragma" content="no-cache">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Kalshi — Trading Dashboard</title><style>
+:root{--bg:#0f1115;--bg2:#16181d;--line:#262b34;--muted:#8a91a0;--gold:#d4af37;--red:#e06c5a;--green:#5fd197;--teal:#4fc3c3}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:#e8e9ec;font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding-bottom:34px}
+#top{position:sticky;top:0;z-index:5;background:rgba(15,17,21,.95);backdrop-filter:blur(10px);padding:calc(10px + env(safe-area-inset-top)) 14px 10px;border-bottom:1px solid var(--line)}
+.row1{display:flex;align-items:center;gap:10px}
+.big{font-size:20px;font-weight:800;line-height:1.15}
+.sub{font-size:10.5px;color:var(--muted);margin-top:2px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 14px}
 .sc{background:#14161b;border:1px solid #22262e;border-radius:10px;padding:10px}
-.sc .l{font-size:10px;color:var(--muted);text-transform:uppercase}.sc .v{font-size:17px;font-weight:800;margin-top:2px}
+.l{font-size:10px;color:var(--muted);text-transform:uppercase}
+.v{font-size:17px;font-weight:800;margin-top:2px}
 .sv{display:flex;gap:8px;padding:0 14px;flex-wrap:wrap}
 .rbtn{flex:1;background:#14161b;border:1px solid #22262e;border-radius:10px;padding:10px 6px;text-align:center;font-size:12px;font-weight:700;cursor:pointer}
 .rbtn.on{background:var(--gold);color:#151515}
-h2{font-size:13px;color:var(--gold);padding:14px 14px 8px;margin:0;text-transform:uppercase;letter-spacing:.5px}
+.msg{color:var(--muted);font-size:11px;padding:8px 14px;min-height:16px}
+#cbar{display:none;gap:10px;align-items:center;margin:4px 14px;background:#14161b;border:1px solid #22262e;border-radius:10px;padding:10px 12px;font-size:13px}
+#cbar button{border:0;border-radius:8px;padding:9px 14px;font-weight:800;cursor:pointer;font-size:12.5px}
+h2{font-size:13px;color:var(--gold);padding:16px 14px 8px;margin:0;text-transform:uppercase;letter-spacing:.5px}
 table{width:calc(100% - 28px);margin:0 14px;border-collapse:collapse;background:#14161b;border:1px solid #22262e;border-radius:10px;overflow:hidden}
 td,th{padding:8px 10px;border-bottom:1px solid #1c2028;font-size:12.5px;text-align:left}
 th{color:var(--muted);font-size:10.5px;text-transform:uppercase}
-.pos{color:#5fd197}.neg{color:#e06c5a}.flat{color:var(--muted)}
-#log{padding:0 14px;list-style:none;margin:0}#log li{font-size:12px;padding:7px 0;border-bottom:1px solid #1c2028}
-.riskmsg{color:var(--muted);font-size:11px;padding:8px 14px}
+.eta{font-variant-numeric:tabular-nums;color:var(--muted);font-size:11.5px}
+.pos{color:var(--green)}.neg{color:var(--red)}
+#log{padding:0 14px;list-style:none;margin:0}
+#log li{font-size:12px;padding:7px 0;border-bottom:1px solid #1c2028}
 </style></head><body>
-<div id=top><h1>Kalshi — LIVE book</h1><div class=sub>bankroll $49.02 ·  8-Nov-20268 Kalshi Nov 08 12:40PM</div></div>
-<div class=stats>
-<div class=sc><div class=l>Open</div><div class=v>1</div></div>
-<div class=sc><div class=l>Realized</div><div class=v class="pos">$0.00</div></div>
-<div class=sc><div class=l>W/L</div><div class=v>0/0</div></div>
+<div id=top>
+ <div class=row1>
+  <div style="flex:1"><div class=big>Kalshi — LIVE book</div><div class=sub>bankroll $49.02 · v9 · Nov 08 12:49PM CST</div></div>
+ </div>
 </div>
-<h2>Risk tolerance</h2><div class=sv><div class='rbtn' data-risk='SAFE' onclick="setRisk('SAFE')">SAFE · ACTIVE</div><div class='rbtn' data-risk='NORMAL' onclick="setRisk('NORMAL')">NORMAL</div><div class='rbtn' data-risk='AGGRESSIVE' onclick="setRisk('AGGRESSIVE')">AGGRESSIVE</div><div class='rbtn' data-risk='DEGEN' onclick="setRisk('DEGEN')">DEGEN</div></div>
-
-<div class=riskmsg>Tap to change risk — commits live; the bot picks it up on its next poll. (If buttons are dormant on phone, text the kalshi bot: "set risk NORMAL")</div>
-<h2>Positions & strategies</h2><table><tr><th>strategy</th><th>open</th><th>invested</th><th>realized</th><th>record</th></tr><tr><td>decay</td><td>9</td><td>$27.50</td><td class="flat">$0.00</td><td>0W/0L</td></tr><tr><td>vol-swatch</td><td>1</td><td>$2.50</td><td class="flat">$0.00</td><td>0W/0L</td></tr></table>
-<h2>Open / last positions</h2><table><tr><th>market</th><th>strat</th><th>entry</th><th>n</th><th>why</th></tr><tr><td>KXTRUMPUFC-26NOV-DJT</td><td>vol-swatch</td><td>19c</td><td>5</td><td>vol-swing watch: high-volume wide book</td></tr><tr><td>KXATPFINALSQUAL-26NIT-ALC</td><td>decay</td><td>99c</td><td>5</td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-FIL</td><td>decay</td><td>99c</td><td>5</td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-SHE</td><td>decay</td><td>99c</td><td>5</td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-ZVE</td><td>decay</td><td>99c</td><td>5</td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-MED</td><td>decay</td><td>99c</td><td>5</td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-TIA</td><td>decay</td><td>99c</td><td>5</td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXMLSLEADER-26GOAL-LMESSI10</td><td>decay</td><td>99c</td><td>5</td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-SIN</td><td>decay</td><td>98c</td><td>5</td><td>near-certain favorite, maker entry, hold to settleme</td></tr><tr><td>KXNASCARCUPSERIES-NCS26-KLAR</td><td>decay</td><td>95c</td><td>5</td><td>near-certain favorite, maker entry, hold to settleme</td></tr></table>
-<h2>Decision log (latest)</h2><ul id=log><li><b>KXTRUMPUFC-26NOV-DJT</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-ALC</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-FIL</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-SHE</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-ZVE</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-MED</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-TIA</b> — SEEDED practice position (broad book test)</li><li><b>KXMLSLEADER-26GOAL-LMESSI1</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-SIN</b> — OPENED paper position (2-poll confirmed)</li><li><b>KXNASCARCUPSERIES-NCS26-KL</b> — OPENED paper position (2-poll confirmed)</li><li><b>KXATPFINALSQUAL-26NIT-ALC</b> — candidate seen once — awaiting 2-poll confirm</li><li><b>KXATPFINALSQUAL-26NIT-FIL</b> — candidate seen once — awaiting 2-poll confirm</li></ul>
+<div class=stats>
+<div class=sc><div class=l>Open positions</div><div class=v>10</div></div>
+<div class=sc><div class=l>Realized P&L</div><div class=v>$0.00</div></div>
+<div class=sc><div class=l>W / L</div><div class=v>0/0</div></div>
+</div>
+<h2>Risk tolerance</h2>
+<div class=sv>
+<div class="rbtn" onclick="setRisk('SAFE')">SAFE · ACTIVE</div>
+<div class="rbtn" onclick="setRisk('NORMAL')">NORMAL</div>
+<div class="rbtn" onclick="setRisk('AGGRESSIVE')">AGGRESSIVE</div>
+<div class="rbtn" onclick="setRisk('DEGEN')">DEGEN</div>
+</div>
+<div class=msg id=msgbox>Tap a level, then Confirm — applied on the bot's next poll.</div>
+<div id=cbar></div>
+<h2>Positions — fill / settle ETA</h2>
+<table><tr><th>market</th><th>strategy</th><th>entry</th><th>n</th><th>fills / settles (UTC)</th><th>why</th></tr>
+<tr><td>KXTRUMPUFC-26NOV-DJT</td><td>vol-swatch</td><td>19c</td><td>5</td><td data-exp="2026-11-15 15:00"></td><td>vol-swing watch: high-volume wide book</td></tr><tr><td>KXATPFINALSQUAL-26NIT-ALC</td><td>decay</td><td>99c</td><td>5</td><td data-exp="2026-11-15 05:01"></td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-FIL</td><td>decay</td><td>99c</td><td>5</td><td data-exp="2026-11-15 05:01"></td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-SHE</td><td>decay</td><td>99c</td><td>5</td><td data-exp="2026-11-15 05:01"></td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-ZVE</td><td>decay</td><td>99c</td><td>5</td><td data-exp="2026-11-15 05:01"></td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-MED</td><td>decay</td><td>99c</td><td>5</td><td data-exp="2026-11-15 05:01"></td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-TIA</td><td>decay</td><td>99c</td><td>5</td><td data-exp="2026-11-15 05:01"></td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXMLSLEADER-26GOAL-LMESSI10</td><td>decay</td><td>99c</td><td>5</td><td data-exp="2026-11-15 03:00"></td><td>decay: near-expiry favorite, maker entry</td></tr><tr><td>KXATPFINALSQUAL-26NIT-SIN</td><td>decay</td><td>98c</td><td>5</td><td data-exp="2026-11-15 05:01"></td><td>near-certain favorite, maker entry, hold to sett</td></tr><tr><td>KXNASCARCUPSERIES-NCS26-KLAR</td><td>decay</td><td>95c</td><td>5</td><td data-exp="2026-11-15 15:00"></td><td>near-certain favorite, maker entry, hold to sett</td></tr>
+</table>
+<h2>Decision log — latest</h2><ul id=log><li><b>KXTRUMPUFC-26NOV-DJT</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-ALC</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-FIL</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-SHE</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-ZVE</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-MED</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-TIA</b> — SEEDED practice position (broad book test)</li><li><b>KXMLSLEADER-26GOAL-LMESSI1</b> — SEEDED practice position (broad book test)</li><li><b>KXATPFINALSQUAL-26NIT-SIN</b> — OPENED paper position (2-poll confirmed)</li><li><b>KXNASCARCUPSERIES-NCS26-KL</b> — OPENED paper position (2-poll confirmed)</li><li><b>KXATPFINALSQUAL-26NIT-ALC</b> — candidate seen once — awaiting 2-poll confirm</li><li><b>KXATPFINALSQUAL-26NIT-FIL</b> — candidate seen once — awaiting 2-poll confirm</li></ul>
 <script>
-var CURRENT="SAFE";
-document.addEventListener('DOMContentLoaded',tokStat);
+var CURRENT='__RISK__';
+var OWN='tristanmoriss',REPO='kalshi-view',BOT='kalshitrading2bot';
+function anyTok(){var ks=['cal_pat_kalshi-view','cal_pat_tristan-calendar','cal_pat_buddy-school-calendar'];
+ for(var i=0;i<ks.length;i++){var v=localStorage.getItem(ks[i]);if(v)return v}return ''}
+var pending=null,msg=document.getElementById('msgbox'),bar=document.getElementById('cbar');
+function show(t){msg.textContent=t}
+function setRisk(k){pending=k;bar.style.display='flex';
+ bar.innerHTML='Change risk tolerance to <b style="color:var(--gold)">'+k+'</b> &nbsp;'+
+ '<button style="background:var(--gold);color:#151515" onclick="confirmRisk()">Confirm</button>'+
+ '<button style="background:#22262e;color:#e8e9ec" onclick="cancelRisk()">Cancel</button>';
+ show('Choose Confirm to apply '+k);}
+function cancelRisk(){pending=null;bar.style.display='none';show('')}
+function confirmRisk(){
+ var T=anyTok();
+ if(T===''||T===null){
+  window.open('https://t.me/'+BOT+'?text=set%20risk%20'+pending,'_blank');
+  show('Opened the kalshi bot — press send to apply '+pending+'.');
+  pending=null;bar.style.display='none';return}
+ var k=pending;show('committing '+k+' …');
+ fetch('https://api.github.com/repos/'+OWN+'/'+REPO+'/contents/settings.json',{headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json'}})
+ .then(function(r){return r.json()}).then(function(cur){
+   var doc=JSON.parse(atob(cur.content.replace(/\s/g,'')));
+   doc.risk_level=k;
+   return fetch('https://api.github.com/repos/'+OWN+'/'+REPO+'/contents/settings.json',{method:'PUT',
+    headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json','Content-Type':'application/json'},
+    body:JSON.stringify({message:'risk '+k+' (phone confirm)',content:btoa(JSON.stringify(doc,null,1)),sha:cur.sha,branch:'main'})})
+ }).then(function(r){
+   show(r.ok?(k+' set — bot applies on next poll'):'commit failed ('+r.status+')');
+   pending=null;bar.style.display='none';
+   document.querySelectorAll('.rbtn').forEach(function(b){b.classList.toggle('on',b.textContent.indexOf(k)===0)});
+ }).catch(function(e){show('error: '+e)});
+}
+function eta(el){
+ var exp=el.getAttribute('data-exp');if(!exp){el.textContent='—';return}
+ var t=new Date(exp.replace(' ','T')+'Z');if(isNaN(t)){el.textContent=exp;return}
+ var ms=t.getTime()-Date.now();
+ if(ms<=0){el.textContent='settled';return}
+ var d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000);
+ el.textContent=(d?d+'d ':'')+h+'h '+m+'m';
+}
+function runEta(){document.querySelectorAll('[data-exp]').forEach(eta)}
 document.addEventListener('visibilitychange',function(){if(!document.hidden){location.reload()}});
 setInterval(function(){if(!document.hidden){location.reload()}},300000);
-var MODE="live";
-document.querySelectorAll('.rbtn').forEach(function(b){
-  if(b.dataset.risk===CURRENT)b.classList.add('on');
-  b.onclick=function(){setRisk(b.dataset.risk)};
-});
-function showMsg(x){var e=document.querySelector('.riskmsg');e.textContent=x}
-function tokKey(){return 'cal_pat_kalshi-view'}
-function anyTok(){var ks=['cal_pat_kalshi-view','cal_pat_tristan-calendar','cal_pat_buddy-school-calendar'];for(var i=0;i<ks.length;i++){var v=localStorage.getItem(ks[i]);if(v)return v}return ''}
-var BOT='kalshitrading2bot';
-function askTok(){var v=prompt('Paste your GitHub token (stored only in this browser)');if(v){var x=v.trim();localStorage.setItem('cal_pat_kalshi-view',x);localStorage.setItem('cal_pat_tristan-calendar',x);localStorage.setItem('cal_pat_buddy-school-calendar',x)}tokStat()}
-var pendingRisk=null;
-function setRisk(k){
-  pendingRisk=k;var bar=document.getElementById('confirmBar');
-  bar.style.display='flex';bar.innerHTML='Change risk tolerance to <b style=color:var(--gold)>'+k+'</b>?
-   <button class=x style=width:auto;padding:8px 14px;background:var(--gold);color:#151515;border:0;font-weight:800 onclick=confirmRisk()>Confirm</button>
-   <button class=x onclick=pendingRisk=null;bar.style.display=none>Cancel</button>';
-  showMsg('pick Confirm to apply '+k);
-}
-function confirmRisk(){
-  var T=anyTok();
-  if(!T){window.open('https://t.me/'+BOT+'?text=set%20risk%20'+pendingRisk,'_blank');showMsg('bot opened — press send to apply '+pendingRisk);pendingRisk=null;return}
-  var k=pendingRisk;showMsg('committing '+k+'...');
-  fetch('https://api.github.com/repos/tristanmoriss/kalshi-view/contents/settings.json',{headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json'}})
-  .then(r=>r.json()).then(cur=>{
-    var doc=JSON.parse(atob(cur.content.replace(/\s/g,'')));
-    doc.risk_level=k;
-    return fetch('https://api.github.com/repos/tristanmoriss/kalshi-view/contents/settings.json',{method:'PUT',headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json','Content-Type':'application/json'},
-     body:JSON.stringify({message:'risk '+k+' from phone',content:btoa(JSON.stringify(doc,null,1)),sha:cur.sha,branch:'main'})})
-  }).then(r=>{showMsg(r.ok?(k+' set — bot applies on next poll'):'failed ('+r.status+')');pendingRisk=null;var bar=document.getElementById('confirmBar');bar.style.display='none';render()});
-}
-function fillEtaCell(el){
-  var exp=el.getAttribute('data-exp');if(!exp){el.textContent='—';return}
-  var t=new Date(exp.replace(' ','T')+'Z');
-  if(isNaN(t)){el.textContent=exp;return}
-  var ms=t-Date.now();
-  if(ms<0){el.textContent='settled';return}
-  var d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000);
-  el.textContent=(d?d+'d ':'')+h+'h '+m+'m';
-}
-
-  fetch('https://api.github.com/repos/tristanmoriss/kalshi-view/contents/settings.json',{headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json'}})
-  .then(r=>r.json()).then(cur=>{
-    var doc=JSON.parse(atob(cur.content.replace(/\s/g,'')));
-    doc.risk_level=k;
-    return fetch('https://api.github.com/repos/tristanmoriss/kalshi-view/contents/settings.json',{method:'PUT',headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json','Content-Type':'application/json'},
-     body:JSON.stringify({message:'risk '+k+' from phone',content:btoa(JSON.stringify(doc,null,1)),sha:cur.sha,branch:'main'})})
-  }).then(r=>{showMsg(r.ok?(k+' set — bot applies on next poll'):'failed ('+r.status+')');render()});
-}
-function anyTok(){var ks=['cal_pat_kalshi-view','cal_pat_tristan-calendar','cal_pat_buddy-school-calendar'];for(var i=0;i<ks.length;i++){var v=localStorage.getItem(ks[i]);if(v)return v}return ''}
-function saveTok(){var v=document.getElementById('tokIn').value.trim();if(!v){showMsg('paste a token first');return}
-localStorage.setItem(tokKey(),v);document.getElementById('tokIn').value='';tokStat()}
-function tokStat(){
- e.textContent=has?'token saved \u2714':'no token — tap to paste';
- var e=document.getElementById('tokStat');var has=!!anyTok();
- e.textContent=has?'token saved \u2714':'no token — tap to paste';
- e.style.color=has?'#5fd197':'var(--gold)';
-}
-var BOT='kalshitrading2bot';
-function setRisk(k){
-  if(MODE!=='live'&&MODE!=='paper'){showMsg('Mode unknown — text the kalshi bot');return}
-  var T=anyTok();
-  if(!T){window.open('https://t.me/'+BOT+'?text=set%20risk%20'+k,'_blank');showMsg('opening the kalshi bot — just press send: "set risk '+k+'"');return}
-  if(!T){showMsg(k+': needs your GitHub token once — check Desktop flow (or text the kalshi bot "set risk '+k+'")');return}
-  fetch('https://api.github.com/repos/tristanmoriss/kalshi-view/contents/settings.json',{headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json'}})
-  .then(r=>r.json()).then(cur=>{
-    var doc=JSON.parse(atob(cur.content.replace(/\s/g,'')));
-    doc.risk_level=k;
-    return fetch('https://api.github.com/repos/tristanmoriss/kalshi-view/contents/settings.json',{method:'PUT',headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json','Content-Type':'application/json'},
-     body:JSON.stringify({message:'risk '+k+' from phone',content:btoa(JSON.stringify(doc,null,1)),sha:cur.sha,branch:'main'})})
-  }).then(r=>{showMsg(r.ok?(k+' set — bot applies on next poll'):'failed ('+r.status+')');document.querySelectorAll('.rbtn').forEach(function(b){b.classList.toggle('on',b.dataset.risk===k)})})
-}
+setInterval(runEta,30000);runEta();
 </script></body></html>
