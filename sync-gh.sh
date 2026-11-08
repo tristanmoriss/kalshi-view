@@ -14,6 +14,8 @@ d=json.load(open('/Users/tristanmorissette/.hermes/profiles/kalshi/workspace/set
 r=json.load(open('/tmp/k_settings.json'))
 if r.get('risk_level') and r['risk_level']!=d.get('risk_level'):
     d['risk_level']=r['risk_level']
+    for _k in ('requested_tier',):
+        if r.get(_k): d[_k]=r[_k]
     json.dump(d,open('/Users/tristanmorissette/.hermes/profiles/kalshi/workspace/settings.json','w'),indent=1)
     print('risk merged from phone:',r['risk_level'])
 "

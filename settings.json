@@ -36,8 +36,118 @@
   }
  },
  "bankroll": 49.02,
- "updated": "2026-11-05",
+ "updated": "2026-11-08",
  "unit_pct": 1.0,
  "practice": true,
- "practice_gate_c": 0.15
+ "practice_gate_c": 0.15,
+ "swap_mult": 2.0,
+ "swap_cooldown_h": 6,
+ "live_realloc": false,
+ "min_flow_v24": 25,
+ "vol_live": true,
+ "fund": {
+  "principal_usd": 49.02,
+  "policy": "GRADUATED RISK FUND: only the active ladder tier's fund trades; the rest of the bankroll stays sealed. A tier unlocks only with BOTH (a) Tristan's risk LEVEL at/above the tier's floor level (ceiling, Tristan-only) and (b) earned milestones from logged settled trades (min settled count, hit-rate floor, positive realized P&L, drawdown within limit). Drawdown breach re-locks the tier automatically; unlocked-by-default tier 1 at SAFE is the floor. Per-level caps still bind INSIDE the active fund.",
+  "unlocks": {
+   "parlay_exec_at_profit": 25.0,
+   "aggressive_scan_at_profit": 50.0,
+   "unit_boost_2x_at_profit": 100.0
+  }
+ },
+ "ladder": {
+  "rules": {
+   "fund_formula": "tier_fund_usd = min(bankroll, max(floor_usd, fund_pct x bankroll)) \u2014 capped at bankroll",
+   "settled_counts": "paper settles (performance.stats) + live settles (performance.fund.live_*)",
+   "hit_rate": "wins / settled (all-time realized)",
+   "drawdown": "dd_pct = max(0, pnl_hwm - realized_pnl) / bankroll x 100; high-water mark in performance.json fund.pnl_hwm",
+   "active_tier": "highest tier with (milestones earned) AND (tier n <= level rank + 1); recomputed every calc",
+   "de_tier": "breach a tier's max_dd_pct -> that tier re-locks until drawdown recovers; auto, logged",
+   "enforcement": "runner.calc_trade/unit_value (per-trade ceiling) + paper_engine open guard (deployed <= active fund)"
+  },
+  "tiers": [
+   {
+    "n": 1,
+    "name": "SCOUT",
+    "level_required": "SAFE",
+    "fund_pct": 0.25,
+    "floor_usd": 10.0,
+    "unlock": {
+     "default": true,
+     "min_settled": 0,
+     "hit_rate_floor": 0.0,
+     "min_pnl_usd": 0.0,
+     "max_dd_pct": 100.0
+    }
+   },
+   {
+    "n": 2,
+    "name": "BUILDER",
+    "level_required": "NORMAL",
+    "fund_pct": 0.5,
+    "floor_usd": 20.0,
+    "unlock": {
+     "min_settled": 20,
+     "hit_rate_floor": 0.55,
+     "min_pnl_usd": 0.0,
+     "max_dd_pct": 5.0
+    }
+   },
+   {
+    "n": 3,
+    "name": "OPERATOR",
+    "level_required": "AGGRESSIVE",
+    "fund_pct": 0.75,
+    "floor_usd": 35.0,
+    "unlock": {
+     "min_settled": 50,
+     "hit_rate_floor": 0.58,
+     "min_pnl_usd": 0.0,
+     "max_dd_pct": 8.0
+    }
+   },
+   {
+    "n": 4,
+    "name": "FULL BOOK",
+    "level_required": "DEGEN",
+    "fund_pct": 1.0,
+    "floor_usd": 0.0,
+    "unlock": {
+     "min_settled": 100,
+     "hit_rate_floor": 0.6,
+     "min_pnl_usd": 0.0,
+     "max_dd_pct": 12.0
+    }
+   }
+  ]
+ },
+ "strategies": {
+  "SAFE": [
+   "decay"
+  ],
+  "NORMAL": [
+   "decay",
+   "bucket-arb",
+   "vol-swing",
+   "parlay"
+  ],
+  "AGGRESSIVE": [
+   "decay",
+   "bucket-arb",
+   "vol-swing",
+   "parlay",
+   "pre-game-drift",
+   "econ-nowcast",
+   "weather-band"
+  ],
+  "DEGEN": [
+   "decay",
+   "bucket-arb",
+   "vol-swing",
+   "parlay",
+   "pre-game-drift",
+   "econ-nowcast",
+   "weather-band",
+   "correlation-stack"
+  ]
+ }
 }
