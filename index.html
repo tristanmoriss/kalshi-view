@@ -19,9 +19,9 @@ th{color:var(--muted);font-size:10.5px;text-transform:uppercase}
 #log{padding:0 14px;list-style:none;margin:0}#log li{font-size:12px;padding:7px 0;border-bottom:1px solid #1c2028}
 .riskmsg{color:var(--muted);font-size:11px;padding:8px 14px}
 </style></head><body>
-<div id=top><h1>Kalshi — LIVE book</h1><div class=sub>bankroll $49.02 ·  8-Nov-20268 Kalshi Nov 08 12:10PM</div></div>
+<div id=top><h1>Kalshi — LIVE book</h1><div class=sub>bankroll $49.02 ·  8-Nov-20268 Kalshi Nov 08 12:14PM</div></div>
 <div class=stats>
-<div class=sc><div class=l>Open</div><div class=v>10</div></div>
+<div class=sc><div class=l>Open</div><div class=v>1</div></div>
 <div class=sc><div class=l>Realized</div><div class=v class="pos">$0.00</div></div>
 <div class=sc><div class=l>W/L</div><div class=v>0/0</div></div>
 </div>
@@ -40,6 +40,8 @@ th{color:var(--muted);font-size:10.5px;text-transform:uppercase}
 <script>
 var CURRENT="SAFE";
 document.addEventListener('DOMContentLoaded',tokStat);
+document.addEventListener('visibilitychange',function(){if(!document.hidden){location.reload()}});
+setInterval(function(){if(!document.hidden){location.reload()}},300000);
 var MODE="live";
 document.querySelectorAll('.rbtn').forEach(function(b){
   if(b.dataset.risk===CURRENT)b.classList.add('on');
