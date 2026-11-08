@@ -45,6 +45,7 @@
  "live_realloc": false,
  "min_flow_v24": 25,
  "vol_live": true,
+ "swing_live": true,
  "stop_rules": {"decay": {"drop_c": 6, "note": "near-certain thesis dies below entry-6c"},
                 "vol-swing": {"drop_c": 10, "note": "bracket failed, no reversion — cut the tail"},
                 "min_age_min": 30},
