@@ -45,6 +45,9 @@
  "live_realloc": false,
  "min_flow_v24": 25,
  "vol_live": true,
+ "stop_rules": {"decay": {"drop_c": 6, "note": "near-certain thesis dies below entry-6c"},
+                "vol-swing": {"drop_c": 10, "note": "bracket failed, no reversion — cut the tail"},
+                "min_age_min": 30},
  "fund": {
   "principal_usd": 49.02,
   "policy": "GRADUATED RISK FUND: only the active ladder tier's fund trades; the rest of the bankroll stays sealed. A tier unlocks only with BOTH (a) Tristan's risk LEVEL at/above the tier's floor level (ceiling, Tristan-only) and (b) earned milestones from logged settled trades (min settled count, hit-rate floor, positive realized P&L, drawdown within limit). Drawdown breach re-locks the tier automatically; unlocked-by-default tier 1 at SAFE is the floor. Per-level caps still bind INSIDE the active fund.",

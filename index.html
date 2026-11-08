@@ -56,11 +56,11 @@ th{color:var(--muted);font-size:10.5px;text-transform:uppercase}
 </div>
 <h2>Graduated risk fund</h2>
 <div class=fund><div class=fl><b>T1 SCOUT</b> ACTIVE — fund $12.26 of $49.02 bankroll · $20.00 deployed · drawdown 0.0%</div><div class=fundbar><i style="width:100.0%"></i></div></div>
-<div class=tiers><div class="tier act"><div class=tn>T1 SCOUT <span style="float:right;font-size:8px;color:var(--muted)">ACTIVE</span></div><div class=tf>$12.26</div><div class=tc>always unlocked</div></div><div class="tier lock"><div class=tn>T2 BUILDER <span style="float:right;font-size:8px;color:var(--muted)">LOCKED</span></div><div class=tf>$24.51</div><div class=tc>0/20 settled<br>hit &ge;55% <b>(&mdash;)</b><br>P&amp;L &gt; $0 <b>(+0.00)</b><br>dd &le;5% <b>(0.0%)</b></div></div><div class="tier lock"><div class=tn>T3 OPERATOR <span style="float:right;font-size:8px;color:var(--muted)">LOCKED</span></div><div class=tf>$36.77</div><div class=tc>0/50 settled<br>hit &ge;57% <b>(&mdash;)</b><br>P&amp;L &gt; $0 <b>(+0.00)</b><br>dd &le;8% <b>(0.0%)</b><br><b style="color:var(--gold)">needs level AGGRESSIVE</b></div></div><div class="tier lock"><div class=tn>T4 FULL BOOK <span style="float:right;font-size:8px;color:var(--muted)">LOCKED</span></div><div class=tf>$49.02</div><div class=tc>0/100 settled<br>hit &ge;60% <b>(&mdash;)</b><br>P&amp;L &gt; $0 <b>(+0.00)</b><br>dd &le;12% <b>(0.0%)</b><br><b style="color:var(--gold)">needs level DEGEN</b></div></div></div>
+<div class=tiers><div class="tier act"><div class=tn>T1 SCOUT <span style="float:right;font-size:8px;color:var(--muted)">ACTIVE</span></div><div class=tf>$12.26</div><div class=tc>always unlocked</div></div><div class="tier lock"><div class=tn>T2 BUILDER <span style="float:right;font-size:8px;color:var(--muted)">LOCKED</span></div><div class=tf>$24.51</div><div class=tc>0/20 settled<br>hit &ge;55% <b>(&mdash;)</b><br>P&amp;L &gt; $0 <b>(+0.00)</b><br>dd &le;5% <b>(0.0%)</b><br><b style="color:var(--gold)">needs level NORMAL</b></div></div><div class="tier lock"><div class=tn>T3 OPERATOR <span style="float:right;font-size:8px;color:var(--muted)">LOCKED</span></div><div class=tf>$36.77</div><div class=tc>0/50 settled<br>hit &ge;57% <b>(&mdash;)</b><br>P&amp;L &gt; $0 <b>(+0.00)</b><br>dd &le;8% <b>(0.0%)</b><br><b style="color:var(--gold)">needs level AGGRESSIVE</b></div></div><div class="tier lock"><div class=tn>T4 FULL BOOK <span style="float:right;font-size:8px;color:var(--muted)">LOCKED</span></div><div class=tf>$49.02</div><div class=tc>0/100 settled<br>hit &ge;60% <b>(&mdash;)</b><br>P&amp;L &gt; $0 <b>(+0.00)</b><br>dd &le;12% <b>(0.0%)</b><br><b style="color:var(--gold)">needs level DEGEN</b></div></div></div>
 <h2>Tier request</h2>
 <div class=sv>
-<div class="rbtn" onclick="setRisk('SAFE')">T1 · SAFE</div>
-<div class="rbtn" onclick="setRisk('NORMAL')">T2 · NORMAL · ACTIVE</div>
+<div class="rbtn" onclick="setRisk('SAFE')">T1 · SAFE · ACTIVE</div>
+<div class="rbtn" onclick="setRisk('NORMAL')">T2 · NORMAL</div>
 <div class="rbtn" onclick="setRisk('AGGRESSIVE')">T3 · AGGR</div>
 <div class="rbtn" onclick="setRisk('DEGEN')">T4 · DEGEN</div>
 </div>
@@ -72,7 +72,7 @@ th{color:var(--muted);font-size:10.5px;text-transform:uppercase}
 </table>
 <h2>Decision log — latest</h2><ul id=log><li><b>KXCOPADELREYGAME-26NOV10TA</b> — slots full — queued, sighting counted</li><li><b>KXCOPADELREYGAME-26NOV10TA</b> — slots full — queued, sighting counted</li><li><b>KXCOPADELREYGAME-26NOV10TA</b> — slots full — queued, sighting counted</li><li><b>MULTI</b> — vol-bracket scan (LIVE)</li><li><b>MULTI</b> — vol-bracket scan (DRY)</li><li><b>MULTI</b> — vol-bracket scan (DRY)</li><li><b>MULTI</b> — vol-bracket scan (DRY)</li><li><b>KXBTC15M-26JUN241045-45</b> — LIVE fill detected by engine sync</li><li><b>KXMVECROSSCATEGORY-S2026Z4</b> — LIVE fill detected by engine sync</li><li><b>KXMVECROSSCATEGORY-S2026CN</b> — LIVE fill detected by engine sync</li><li><b>KXNBAGAME-26NOV05MIAGSW-GS</b> — LIVE fill detected by engine sync</li><li><b>KXNBAGAME-26NOV05MIAGSW-GS</b> — LIVE fill detected by engine sync</li></ul>
 <script>
-var CURRENT='__RISK__';
+var CURRENT='SAFE';
 var OWN='tristanmoriss',REPO='kalshi-view',BOT='kalshitrading2bot';
 function anyTok(){var ks=['cal_pat_kalshi-view','cal_pat_tristan-calendar','cal_pat_buddy-school-calendar'];
  for(var i=0;i<ks.length;i++){var v=localStorage.getItem(ks[i]);if(v)return v}return ''}
